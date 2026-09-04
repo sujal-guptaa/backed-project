@@ -9,7 +9,7 @@ import mongoose from "mongoose";
 const generateAccessAndRefreshTookens=async(userId)=>{
     //first find userId and then generate Access and refresh Token  
         try {
-            const user=User.findById(userId)
+            const user=await User.findById(userId)
             const accessToken=user.generateAccessToken()
             const refreshToken=user.generateRefreshToken()
             user.refreshToken=refreshToken
@@ -17,6 +17,7 @@ const generateAccessAndRefreshTookens=async(userId)=>{
 
             return {accessToken,refreshToken}
         } catch (error) {
+            console.log("TOKEN ERROR:", error);
             throw new ApiError(500,"Something went wrong while generating referesh and access token")
         }
 }
@@ -102,7 +103,7 @@ const loginUser=asyncHandler(async (req,res)=>{
         throw new ApiError(404,"User does not exist")
     }
 
-    const isPasswordValid=user.isPasswordCorrect(password)
+    const isPasswordValid=await user.isPasswordCorrect(password)
 
     if(!isPasswordValid){
         throw new ApiError(401,"Invalid user credentials")
@@ -150,8 +151,8 @@ const logoutUser=asyncHandler(async(req,res)=>{
 
         return res
         .status(200)
-        .clearCookie("accessToken",accessToken,options)
-        .clearCookie("refreshToken",refreshToken,options)
+        .clearCookie("accessToken",options)
+        .clearCookie("refreshToken",options)
         .json(new ApiResponse(200,{},"User Logged Out"))
 })
 export {
