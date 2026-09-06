@@ -243,12 +243,13 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, {}, "Password changed successfully"));
 });
 const getCurrentUser = asyncHandler(async (req, res) => {
+
     res.status(200).json(new ApiResponse(200, req.user, "user fetched successfully"));
 });
 
 const updateAccountDetails = asyncHandler(async (req, res) => {
     const { fullName, email } = req.body;
-
+ 
     if (!fullName || !email) {
         throw new ApiError(400, "All fields are requried");
     }
