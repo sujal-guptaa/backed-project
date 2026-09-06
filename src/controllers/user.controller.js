@@ -327,7 +327,7 @@ const updateUserCoverImage = asyncHandler(async (req, res) => {
     const oldCoverImagePublicId=user.coverImagePublicId;
     const coverImage = await uploadOnCloudinary(coverImageLocalPath);
     if (!coverImage) {
-        throw new ApiError(400, "Error while uploading on Cover Image");
+        throw new ApiError(500, "Error while uploading on Cover Image");
     }
     if(oldCoverImagePublicId){
         await deleteOnCloudinary(oldCoverImagePublicId);
