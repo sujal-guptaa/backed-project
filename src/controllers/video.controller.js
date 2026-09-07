@@ -180,18 +180,18 @@ const deleteVideo = asyncHandler(async (req, res) => {
         throw new ApiError(500, "Something went wrong while deleting the video or thumbnail")
     }
     const deletevideo = await Video.findByIdAndDelete(videoId);
-    if (!deleteVideo) {
+    if (!deletevideo) {
         throw new ApiError(500, "Failed to delete video from database.");
     }
     return res
         .status(200)
-        .json(200, "Video deleted successfully")
+        .json(new ApiResponse(200,deleteVideo, "Video deleted successfully"));
 });
 
 const togglePublishStatus = asyncHandler(async (req, res) => {
     const { videoId } = req.params;
     // 1. Validate video ID
-    if(isValidObjectId(videoId)){
+    if(!isValidObjectId(videoId)){
         throw new ApiError(400,"Please provide a valid video ID.")
     }
     // 2. Find video
@@ -210,7 +210,7 @@ const togglePublishStatus = asyncHandler(async (req, res) => {
             video,
             "Video publish status updated successfully."
         )
-    );
+    );  
 });
 
 export {
