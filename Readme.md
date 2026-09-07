@@ -131,220 +131,40 @@ npm run dev
 npm start
 ```
 
-The server will typically run at `http://localhost:4000` or the `PORT` you configured in your `.env` file.
+The server typically runs at http://localhost:4000 (or the PORT you set).
 
-### Health Check
-Verify the server is running:
-```bash
-curl http://localhost:4000/api/health-check
-```
+## API Examples
+Below are example endpoint patterns — adjust paths to match your route definitions.
 
-## API Documentation
+- Auth
+  - POST /api/auth/register
+  - POST /api/auth/login
 
-### Base URL
-```
-http://localhost:4000/api
-```
+- Videos
+  - GET /api/videos
+  - GET /api/videos/:id
+  - POST /api/videos
+  - PUT /api/videos/:id
+  - DELETE /api/videos/:id
 
-### Authentication
+- Comments
+  - POST /api/videos/:id/comments
+  - GET /api/videos/:id/comments
 
-#### Register a New User
-```http
-POST /api/auth/register
-Content-Type: application/json
+- Likes
+  - POST /api/videos/:id/likes
+  - DELETE /api/likes/:id
 
-{
-  "username": "john_doe",
-  "email": "john@example.com",
-  "password": "secure_password"
-}
-```
+- Playlists
+  - POST /api/playlists
+  - GET /api/playlists/:id
+  - PATCH /api/playlists/:id
 
-#### Login
-```http
-POST /api/auth/login
-Content-Type: application/json
-
-{
-  "email": "john@example.com",
-  "password": "secure_password"
-}
-```
-
-**Response** (includes JWT token):
-```json
-{
-  "token": "eyJhbGciOiJIUzI1NiIs...",
-  "user": { "id": "...", "username": "john_doe", "email": "john@example.com" }
-}
-```
-
-### Videos
-
-#### Get All Videos
-```http
-GET /api/videos
-```
-
-#### Get Video by ID
-```http
-GET /api/videos/:id
-```
-
-#### Create Video
-```http
-POST /api/videos
-Authorization: Bearer <token>
-Content-Type: application/json
-
-{
-  "title": "My First Video",
-  "description": "Video description",
-  "videoUrl": "cloudinary_url",
-  "thumbnail": "cloudinary_thumbnail_url"
-}
-```
-
-#### Update Video
-```http
-PUT /api/videos/:id
-Authorization: Bearer <token>
-Content-Type: application/json
-
-{
-  "title": "Updated Title",
-  "description": "Updated description",
-  "isPublished": true
-}
-```
-
-#### Toggle Video Publish Status
-```http
-PATCH /api/videos/:id/toggle-publish
-Authorization: Bearer <token>
-```
-
-#### Delete Video
-```http
-DELETE /api/videos/:id
-Authorization: Bearer <token>
-```
-
-### Comments
-
-#### Add Comment to Video
-```http
-POST /api/videos/:videoId/comments
-Authorization: Bearer <token>
-Content-Type: application/json
-
-{
-  "content": "Great video!"
-}
-```
-
-#### Get All Comments for Video
-```http
-GET /api/videos/:videoId/comments
-```
-
-### Likes
-
-#### Like a Video
-```http
-POST /api/videos/:videoId/likes
-Authorization: Bearer <token>
-```
-
-#### Unlike a Video
-```http
-DELETE /api/likes/:likeId
-Authorization: Bearer <token>
-```
-
-### Playlists
-
-#### Create Playlist
-```http
-POST /api/playlists
-Authorization: Bearer <token>
-Content-Type: application/json
-
-{
-  "name": "My Playlist",
-  "description": "Playlist description"
-}
-```
-
-#### Get Playlist by ID
-```http
-GET /api/playlists/:id
-```
-
-#### Update Playlist
-```http
-PATCH /api/playlists/:id
-Authorization: Bearer <token>
-Content-Type: application/json
-
-{
-  "name": "Updated Playlist Name",
-  "description": "Updated description"
-}
-```
-
-### Users
-
-#### Get User Profile
-```http
-GET /api/users/:userId
-```
-
-#### Update User Profile
-```http
-PUT /api/users/:userId
-Authorization: Bearer <token>
-Content-Type: multipart/form-data
-
-- avatar (image file)
-- coverImage (image file)
-- fullName (text)
-- bio (text)
-```
-
-### Subscriptions
-
-#### Subscribe to User
-```http
-POST /api/subscriptions
-Authorization: Bearer <token>
-Content-Type: application/json
-
-{
-  "channelId": "user_id_to_subscribe"
-}
-```
-
-### Tweets
-
-#### Create Tweet
-```http
-POST /api/tweets
-Authorization: Bearer <token>
-Content-Type: application/json
-
-{
-  "content": "Tweet content"
-}
-```
-
-### Dashboard
-
-#### Get User Dashboard
-```http
-GET /api/dashboard
-Authorization: Bearer <token>
-```
+Example cURL to create a comment (authenticated):
+curl -X POST "http://localhost:4000/api/videos/<videoId>/comments" \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{"content":"Great video!"}'
 
 ## Testing
 
