@@ -1,6 +1,6 @@
 # Backend Project - Video Platform API
 
-A robust Node.js/Express backend API for a YouTube-like video platform. This project provides comprehensive endpoints for user authentication, video management, social features (comments, likes), playlists, tweets, subscriptions, and dashboard analytics.
+A robust Node.js/Express backend API for a YouTube-like video platform. This project provides comprehensive endpoints for user authentication, video management, social features (comments, likes), playlists, and more.
 
 ## Table of Contents
 
@@ -13,6 +13,7 @@ A robust Node.js/Express backend API for a YouTube-like video platform. This pro
 - [API Documentation](#api-documentation)
 - [Testing](#testing)
 - [Contributing](#contributing)
+- [Acknowledgements](#acknowledgements)
 - [License](#license)
 
 ## Features
@@ -224,9 +225,31 @@ Contributions, issues, and feature requests are welcome! For larger changes, ple
    - Provide a clear description of changes
    - Reference any related issues
 
+## Acknowledgements
+
+This project was built as a learning project by following the
+**Chai aur Javascript Backend | Hindi** series by **Chai aur Code**.
+
+Special thanks to **Hitesh Choudhary** and the Chai aur Code team
+for the detailed backend development tutorials and guidance.
+
+The original tutorial covers building a YouTube-like backend using
+technologies such as Node.js, Express.js, MongoDB, Mongoose, JWT,
+and other backend tools.
+
+### Learning Resource
+
+- **YouTube Playlist:** [Chai aur Javascript Backend | Hindi](https://www.youtube.com/watch?v=EH3vGeqeIAo&list=PLu71SKxNbfoBGh_8p_NS-ZAh6v7HhYqHW)
+- **Channel:** [Chai aur Code](https://www.youtube.com/@chaiaurcode)
+- **Original Backend Repository:** [chai-backend](https://github.com/hiteshchoudhary/chai-backend)
+
+This repository is my learning implementation of the concepts taught
+in the series, with my own debugging, testing, and modifications
+made while developing the project.
+
 ## License
 
-This project is for learning purposes. Add a license file (e.g., MIT) if you want to permit reuse.
+This project is for learning and educational purposes.
 
 ---
 
