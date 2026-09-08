@@ -100,7 +100,7 @@ const publishAVideo = asyncHandler(async (req, res) => {
     if (!video) {
         throw new ApiError(500, "Something went wrong while publishing the video.")
     }
-    return res.status(200).json(new ApiResponse(201, video, "Video uploaded successfully"))
+    return res.status(201).json(new ApiResponse(201, video, "Video uploaded successfully"))
 });
 
 const getVideoById = asyncHandler(async (req, res) => {
@@ -111,7 +111,7 @@ const getVideoById = asyncHandler(async (req, res) => {
     }
     const video = await Video.findById(videoId).select("-videoPublicID -thumbnailPublicID -__v")
     if (!video) {
-        throw new ApiError(400, "Video not found.")
+        throw new ApiError(404, "Video not found.")
     }
     return res.status(200).json(new ApiResponse(200, video, "Video Fetched Successfully"))
 });
@@ -185,7 +185,7 @@ const deleteVideo = asyncHandler(async (req, res) => {
     }
     return res
         .status(200)
-        .json(new ApiResponse(200,deleteVideo, "Video deleted successfully"));
+        .json(new ApiResponse(200,deletevideo, "Video deleted successfully"));
 });
 
 const togglePublishStatus = asyncHandler(async (req, res) => {
