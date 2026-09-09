@@ -13,7 +13,7 @@ const createTweet = asyncHandler(async (req, res) => {
     }
     const {content}=req.body
     if(!content?.trim()){
-        return new ApiError(400,"Content is requried.")
+        throw new ApiError(400,"Content is requried.")
     }
     const tweet=await Tweet.create({
         content:content.trim(),
@@ -37,25 +37,73 @@ const getUserTweets = asyncHandler(async (req, res) => {
     if(!user){
         throw new ApiError(404,"User not found.")
     }
-    const tweet=await Tweet.find({
+    const tweets=await Tweet.find({
         owner:userId
     }).sort({createdAt:-1});
 
     return res.status(200)
                 .json(new ApiResponse(
                     200,
-                    tweet,
+                    tweets,
                     "Tweet fetched successfully"
                 ))
 })
 
 const updateTweet = asyncHandler(async (req, res) => {
     //TODO: update tweet
+    const  {tweetId}=req.params
+    if(!tweetId || !isValidObjectId(tweetId)){
+        throw new ApiError(400,"Invalid Tweet ID")
+    }
+    const {content}=req.body
+    const tweet=await Tweet.findOneAndUpdate(
+        {
+            _id:tweetId,
+            owner:req.user._id
+        },
+        {
+            $set:{
+                content:content.trim()
+            }
+        },
+        {
+            new:true
+        }
+    );
+    if(!tweet){
+        throw new ApiError(404, "Tweet not found or unauthorized");
+    }
+    return res.status(200)
+                .json(new ApiResponse(
+                    200,
+                    tweet,
+                    "Tweet updated Successfully"
+                ))
+
 })
 
 const deleteTweet = asyncHandler(async (req, res) => {
     //TODO: delete tweet
-
+    const {tweetId}=req.params;
+    if(!tweetId || !isValidObjectId(tweetId)){
+        throw new ApiError(400,"Invalid Tweet ID")
+    }
+    const tweet=await Tweet.findOneAndDelete(
+        {
+            _id:tweetId,
+            owner:req.user._id
+        }
+    )
+    if(!tweet){
+        throw new ApiError(404,"Tweet not found or unauthorized")
+    }
+    return res.status(200)
+                .json(
+                    new ApiResponse(
+                        200,
+                        "Tweet deleted sucessfully"
+                    )
+                )
 })
 
 export {
